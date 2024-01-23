@@ -1,0 +1,66 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: weijer1968-poi-backend-app-dev
+  annotations:
+    argocd/app-name: weijer1968-poi-backend-app-dev
+    backstage.io/kubernetes-id: weijer1968-poi-backend-app
+    backstage.io/kubernetes-namespace: weijer1968
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: rhdh-aro24/weijer1968-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.kovj5vhc.eastus.aroapp.io/dev-pipelines/ns/weijer1968/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.kovj5vhc.eastus.aroapp.io/k8s/ns/weijer1968/deployments/weijer1968-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.kovj5vhc.eastus.aroapp.io/#https://github.com/rhdh-aro24/weijer1968-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "user:weijer1968"
+  system: workshop-system-weijer1968
+  providesApis:
+    - backend-api-weijer1968
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-weijer1968
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "user:weijer1968"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-weijer1968
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: https://weijer1968-poi-backend-app-weijer1968.apps.kovj5vhc.eastus.aroapp.io/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/rhdh-aro24/weijer1968-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "user:weijer1968"
+  system: workshop-system-weijer1968
+  definition:
+    $text: https://github.com/rhdh-aro24/weijer1968-backend/tree/main/src/main/resources/META-INF/openapi.yaml
